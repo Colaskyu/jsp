@@ -28,7 +28,7 @@
 		stmt = conn.createStatement();
 		
 		// 4단계 - 쿼리실행
-		String sql = "DELETE FROM `USER` WHERE seq="+seq;
+		String sql = "DELETE FROM `USER` WHERE uid="+seq;
 		stmt.executeUpdate(sql);
 	
 		// 5단계 - 결과셋처리(SELECT 경우)

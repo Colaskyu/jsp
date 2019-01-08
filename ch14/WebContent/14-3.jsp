@@ -94,7 +94,7 @@
 			<td><%= user.getPos() %></td>
 			<td><%= user.getDep() %></td>
 			<td><%= user.getRdate().substring(2, 10) %></td>
-			<td><a href="#">수정</a></td>
+			<td><a href="./14-5.jsp?seq=<%= user.getSeq() %>">수정</a></td>
 			<td><a href="./14-4.jsp?seq=<%= user.getSeq() %>">삭제</a></td>
 		</tr>
 		<%
