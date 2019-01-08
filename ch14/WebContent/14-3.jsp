@@ -13,6 +13,8 @@
 	final String PASS = "1234";
 	
 	Connection conn = null;
+	Statement stmt = null;
+	ResultSet rs = null;
 	ArrayList<USER> list = new ArrayList<>();
 	
 	try{
@@ -23,12 +25,12 @@
 		conn = DriverManager.getConnection(HOST, USER, PASS);
 		
 		// 3단계 - 쿼리실행 객체 생성
-		Statement stmt = conn.createStatement();
+		stmt = conn.createStatement();
 		
 		// 4단계 - 쿼리실행
 		// SELECT 경우 -> executeQuery() 실행
 		// INSERT, UPDATE, DELETE 경우 -> executeUpdate() 실행
-		ResultSet rs = stmt.executeQuery("SELECT * FROM `USER`;");
+		rs = stmt.executeQuery("SELECT * FROM `USER`;");
 				
 		// 5단계 - 결과셋 처리(SELECT 경우)
 		while(rs.next()){
@@ -53,6 +55,8 @@
 		e.printStackTrace();
 	}finally{
 		// 6단계 - 데이터베이스 종료
+		rs.close();
+		stmt.close();
 		conn.close();
 	}
 %>
@@ -91,11 +95,16 @@
 			<td><%= user.getDep() %></td>
 			<td><%= user.getRdate().substring(2, 10) %></td>
 			<td><a href="#">수정</a></td>
-			<td><a href="#">삭제</a></td>
+			<td><a href="./14-4.jsp?seq=<%= user.getSeq() %>">삭제</a></td>
 		</tr>
 		<%
 			}
 		%>	
 	</table>
+	<a href="./14-1.jsp">직원등록</a>	
+	
 </body>
 </html>
+
+
+
