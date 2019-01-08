@@ -65,7 +65,7 @@
 </head>
 <body>
 	<h3>직원수정</h3>
-	<form action="#">
+	<form action="./14-6.jsp">
 		<table border="1">
 			<tr>
 				<td>아이디</td>
@@ -116,7 +116,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right"><input type="submit" value="등록하기" /></td>
+				<td colspan="2" align="right"><input type="submit" value="수정하기" /></td>
 			</tr>
 		</table>
 	</form>
