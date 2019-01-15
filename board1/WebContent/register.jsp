@@ -5,6 +5,30 @@
 		<meta charset="UTF-8">
 		<title>회원가입</title>
 		<link rel="stylesheet" href="./css/style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			$(function(){
+				
+				$('input[name=uid]').focusout(function(){
+					
+					var uid = $(this).val();
+										
+					$.ajax({
+						url: './proc/checkUid.jsp?uid='+uid,
+						type: 'get',
+						dataType: 'json',
+						success: function(){}						
+					});
+					
+					
+				});
+				
+				
+			});
+		
+		</script>
+		
+		
 	</head>
 	<body>
 		<div id="member">

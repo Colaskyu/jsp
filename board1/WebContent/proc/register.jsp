@@ -28,7 +28,7 @@
 	// 3단계
 	String  sql  = "INSERT INTO `JSP_MEMBER` SET ";
 			sql += "uid=?,";
-			sql += "pass=?,";
+			sql += "pass=PASSWORD(?),";
 			sql += "name=?,";
 			sql += "nick=?,";
 			sql += "email=?,";
