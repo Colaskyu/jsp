@@ -11,13 +11,23 @@
 				
 				$('input[name=uid]').focusout(function(){
 					
-					var uid = $(this).val();
+					var tag = $(this);
+					var uid = tag.val();
 										
 					$.ajax({
 						url: './proc/checkUid.jsp?uid='+uid,
 						type: 'get',
 						dataType: 'json',
-						success: function(){}						
+						success: function(data){
+							
+							if(data.result == 1){
+								$('.resultId').css('color', 'red').text('이미 사용중인 아이디 입니다.');
+								tag.focus();
+							}else{
+								$('.resultId').css('color', 'green').text('사용 가능한 아이디 입니다.');
+							}
+							
+						}						
 					});
 					
 					

@@ -1,3 +1,4 @@
+<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -35,8 +36,11 @@
 	stmt.close();
 	conn.close();
 	
-	out.println(count);
-
+	// JSON 데이터 생성 및 출력	
+	JSONObject json = new JSONObject();
+	json.put("result", count);
+	
+	out.print(json);
 %>
 
 
