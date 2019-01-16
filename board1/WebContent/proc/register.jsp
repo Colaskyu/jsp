@@ -1,3 +1,5 @@
+<%@page import="kr.co.board1.config.SQL"%>
+<%@page import="kr.co.board1.config.DBConfig"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
@@ -16,30 +18,10 @@
 	String addr2 = request.getParameter("addr2");
 	String regip = request.getRemoteAddr();
 	
-	//데이터베이스 정보
-	final String HOST = "jdbc:mysql://192.168.0.126:3306/chhak";
-	final String USER = "chhak";
-	final String PASS = "1234";
-		
-	// 1단계
-	Class.forName("com.mysql.jdbc.Driver");
-	// 2단계
-	Connection conn = DriverManager.getConnection(HOST, USER, PASS);
+	Connection conn = DBConfig.getConnection();
+	
 	// 3단계
-	String  sql  = "INSERT INTO `JSP_MEMBER` SET ";
-			sql += "uid=?,";
-			sql += "pass=PASSWORD(?),";
-			sql += "name=?,";
-			sql += "nick=?,";
-			sql += "email=?,";
-			sql += "hp=?,";
-			sql += "zip=?,";
-			sql += "addr1=?,";
-			sql += "addr2=?,";
-			sql += "regip=?,";
-			sql += "rdate=NOW()";
-			
-	PreparedStatement psmt = conn.prepareStatement(sql);
+	PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_REGISTER);
 	psmt.setString(1, uid);
 	psmt.setString(2, pass);
 	psmt.setString(3, name);
@@ -61,7 +43,7 @@
 	conn.close();
 	
 	// 리다이렉트
-	response.sendRedirect("../login.jsp");
+	response.sendRedirect("../login.jsp?register=success");
 
 %>
 

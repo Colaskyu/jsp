@@ -1,102 +1,35 @@
 /**
- * 아이디, 닉네임, 이메일, 휴대폰 중복체크
+ * 유효성 검증
  */
 $(function(){
 				
-	// 아이디 중복체크
-	$('input[name=uid]').focusout(function(){
+	$('#regForm').submit(function(){
 		
-		var tag = $(this);
-		var uid = tag.val();
-							
-		$.ajax({
-			url: './proc/checkUid.jsp?uid='+uid,
-			type: 'get',
-			dataType: 'json',
-			success: function(data){
-				
-				if(data.result == 1){
-					$('.resultId').css('color', 'red').text('이미 사용중인 아이디 입니다.');
-					tag.focus();
-				}else{
-					$('.resultId').css('color', 'green').text('사용 가능한 아이디 입니다.');
-				}
-			}						
-		});				
+		var uid  = $('input[name=uid]').val();
+		var pw1  = $('input[name=pw1]').val();
+		var pw2  = $('input[name=pw2]').val();
+		var name = $('input[name=name]').val();
 		
-	});
-	
-	// 닉네임 중복체크
-	$('input[name=nick]').focusout(function(){
+		if(!isUidOk){
+			alert('아이디가 이미 사용중 입니다.');
+			return false;
+		}
 		
-		var tag = $(this);
-		var nick = tag.val();
-							
-		$.ajax({
-			url: './proc/checkNick.jsp?nick='+nick,
-			type: 'get',
-			dataType: 'json',
-			success: function(data){
-				
-				if(data.result == 1){
-					$('.resultNick').css('color', 'red').text('이미 사용중인 닉네임 입니다.');
-					tag.focus();
-				}else{
-					$('.resultNick').css('color', 'green').text('사용 가능한 닉네임 입니다.');
-				}
-				
-			}						
-		});				
+		// 아이디 자리수 체크
+		if(uid.length < 4){
+			alert('아이디는 최소 4자 이상이어야 합니다.');
+			return false;
+		}
+		
+		// 비번 일치여부 확인
+		if(pw1 != pw2){
+			alert('비밀번호가 서로 일치하지 않습니다.');
+			return false;
+		}
+		
+		return true;
 		
 	});
 	
 	
-	// 이메일 중복체크
-	$('input[name=email]').focusout(function(){
-		
-		var tag = $(this);
-		var email = tag.val();
-							
-		$.ajax({
-			url: './proc/checkEmail.jsp?email='+email,
-			type: 'get',
-			dataType: 'json',
-			success: function(data){
-				
-				if(data.result == 1){
-					$('.resultEmail').css('color', 'red').text('이미 사용중인 이메일 입니다.');
-					tag.focus();
-				}else{
-					$('.resultEmail').css('color', 'green').text('사용 가능한 이메일 입니다.');
-				}
-			}						
-		});				
-		
-	});
-	
-	// 휴대폰 중복체크
-	$('input[name=hp]').focusout(function(){
-		
-		var tag = $(this);
-		var hp = tag.val();
-							
-		$.ajax({
-			url: './proc/checkHp.jsp?hp='+hp,
-			type: 'get',
-			dataType: 'json',
-			success: function(data){
-				
-				if(data.result == 1){
-					$('.resultHp').css('color', 'red').text('이미 사용중인 휴대폰 입니다.');
-					tag.focus();
-				}else{
-					$('.resultHp').css('color', 'green').text('사용 가능한 휴대폰 입니다.');
-				}
-				
-			}						
-		});				
-		
-	});
-	
-	
-});
+});	
