@@ -14,6 +14,16 @@ public class BoardVO {
 	private String regip;
 	private String rdate;
 	
+	private String nick;
+	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
+	
 	public int getSeq() {
 		return seq;
 	}

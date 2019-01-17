@@ -15,7 +15,7 @@ public class SQL {
 											+ "regip=?,"
 											+ "rdate=NOW()";
 	
-	public static final String SELECT_LIST = "SELECT * FROM `JSP_BOARD`";
+	public static final String SELECT_LIST = "SELECT b.*, m.nick FROM `JSP_BOARD` AS b JOIN `JSP_MEMBER` AS m ON b.uid = m.uid ORDER BY b.seq DESC";
 }
 
 

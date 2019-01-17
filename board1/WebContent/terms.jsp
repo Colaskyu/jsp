@@ -1,3 +1,5 @@
+<%@page import="kr.co.board1.vo.TermsVO"%>
+<%@page import="kr.co.board1.service.MemberService"%>
 <%@page import="kr.co.board1.config.SQL"%>
 <%@page import="kr.co.board1.config.DBConfig"%>
 <%@page import="java.sql.ResultSet"%>
@@ -7,27 +9,8 @@
 <%@page import="oracle.jdbc.driver.DBConversion"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	Connection conn = DBConfig.getConnection();
-	
-	// 3단계 - 쿼리실행 객체 생성
-	Statement stmt = conn.createStatement();
-	
-	// 4단계 - 쿼리실행
-	ResultSet rs = stmt.executeQuery(SQL.SELECT_TERMS);
-	
-	// 5단계 - 결과셋 처리(SELECT 경우)
-	String terms 	= null;
-	String privacy 	= null;
-	
-	if(rs.next()){
-		terms 	= rs.getString(1);
-		privacy = rs.getString(2);
-	}
-	
-	// 6단계 - DB자원 해제
-	rs.close();
-	stmt.close();
-	conn.close();
+	MemberService service = MemberService.getInstance();
+	TermsVO vo = service.terms();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +48,7 @@
 					<caption>사이트 이용약관</caption>
 					<tr>
 						<td>
-							<textarea readonly><%= terms %></textarea>
+							<textarea readonly><%= vo.getTerms() %></textarea>
 							<div>
 								<label><input type="checkbox" name="chk1" />&nbsp;동의합니다.</label>        
 							</div>
@@ -78,7 +61,7 @@
 					<caption>개인정보 취급방침</caption>
 					<tr>
 						<td>
-							<textarea readonly><%= privacy %></textarea>
+							<textarea readonly><%= vo.getPrivacy() %></textarea>
 							<div>
 								<label><input type="checkbox" name="chk2" />&nbsp;동의합니다.</label>        
 							</div>

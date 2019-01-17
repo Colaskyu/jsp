@@ -27,17 +27,18 @@
 	
 	while(rs.next()){
 		BoardVO vo = new BoardVO();
-		vo.setSeq(rs.getInt(1));
+		vo.setSeq(rs.getInt("seq"));
 		vo.setParent(rs.getInt(2));
 		vo.setComment(rs.getInt(3));
 		vo.setCate(rs.getString(4));
-		vo.setTitle(rs.getString(5));
+		vo.setTitle(rs.getString("title"));
 		vo.setContent(rs.getString(6));
 		vo.setFile(rs.getInt(7));
 		vo.setHit(rs.getInt(8));
 		vo.setUid(rs.getString(9));
 		vo.setRegip(rs.getString(10));
-		vo.setRdate(rs.getString(11));
+		vo.setRdate(rs.getString("rdate"));
+		vo.setNick(rs.getString("nick"));
 		
 		list.add(vo);		
 	}
@@ -76,8 +77,8 @@
 					<tr>
 						<td><%= vo.getSeq() %></td>
 						<td><a href="#"><%= vo.getTitle() %></a>&nbsp;[<%= vo.getComment() %>]</td>
-						<td><%= vo.getUid() %></td>
-						<td><%= vo.getRdate() %></td>
+						<td><%= vo.getNick() %></td>
+						<td><%= vo.getRdate().substring(2, 10) %></td>
 						<td><%= vo.getHit() %></td>
 					</tr>
 					<% } %>
