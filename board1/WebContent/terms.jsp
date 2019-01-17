@@ -9,7 +9,7 @@
 <%@page import="oracle.jdbc.driver.DBConversion"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	MemberService service = MemberService.getInstance();
+	MemberService service = new MemberService();
 	TermsVO vo = service.terms();
 %>
 <!DOCTYPE html>

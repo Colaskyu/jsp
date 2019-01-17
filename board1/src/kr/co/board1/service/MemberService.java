@@ -17,6 +17,9 @@ public class MemberService {
 		return service;
 	}
 	
+	// 객체를 생성 할 수 없게 private 생성자 선언 
+	private MemberService() {}
+	
 	public void login() throws Exception {}
 	public void logout() throws Exception {}
 	
