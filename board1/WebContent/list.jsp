@@ -1,3 +1,10 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.co.board1.vo.BoardVO"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="kr.co.board1.config.SQL"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="kr.co.board1.config.DBConfig"%>
 <%@page import="kr.co.board1.vo.MemberVO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -6,6 +13,40 @@
 	if(member == null){
 		pageContext.forward("./login.jsp");			
 	}
+	
+	Connection conn = DBConfig.getConnection();
+	
+	// 3단계
+	PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_LIST);
+	
+	// 4단계
+	ResultSet rs = psmt.executeQuery();
+	
+	// 5단계
+	ArrayList<BoardVO> list = new ArrayList<>();
+	
+	while(rs.next()){
+		BoardVO vo = new BoardVO();
+		vo.setSeq(rs.getInt(1));
+		vo.setParent(rs.getInt(2));
+		vo.setComment(rs.getInt(3));
+		vo.setCate(rs.getString(4));
+		vo.setTitle(rs.getString(5));
+		vo.setContent(rs.getString(6));
+		vo.setFile(rs.getInt(7));
+		vo.setHit(rs.getInt(8));
+		vo.setUid(rs.getString(9));
+		vo.setRegip(rs.getString(10));
+		vo.setRdate(rs.getString(11));
+		
+		list.add(vo);		
+	}
+	
+	// 6단계
+	rs.close();
+	psmt.close();
+	conn.close();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -31,13 +72,16 @@
 						<td>조회</td>
 					</tr>
 				
+					<% for(BoardVO vo : list){ %>
 					<tr>
-						<td>1</td>
-						<td><a href="#">테스트 제목입니다.</a>&nbsp;[3]</td>
-						<td>홍길동</td>
-						<td>18-03-01</td>
-						<td>12</td>
+						<td><%= vo.getSeq() %></td>
+						<td><a href="#"><%= vo.getTitle() %></a>&nbsp;[<%= vo.getComment() %>]</td>
+						<td><%= vo.getUid() %></td>
+						<td><%= vo.getRdate() %></td>
+						<td><%= vo.getHit() %></td>
 					</tr>
+					<% } %>
+					
 				</table>
 			</div>
 			<!-- 페이징 -->
