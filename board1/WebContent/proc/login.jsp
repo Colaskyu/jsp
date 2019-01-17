@@ -44,7 +44,7 @@
 		
 		session.setAttribute("member", vo);
 		
-		redirectUrl = "./list.jsp";
+		redirectUrl = "../list.jsp";
 	}else{
 		// 아이디와 비밀번호가 일치하는 회원이 테이블에 없을 경우
 		redirectUrl = "../login.jsp?result=fail";

@@ -7,5 +7,13 @@ public class SQL {
 	public static final String INSERT_REGISTER  = "INSERT INTO `JSP_MEMBER` SET uid=?, pass=PASSWORD(?), name=?, nick=?, email=?, hp=?, zip=?, addr1=?, addr2=?, regip=?, rdate=NOW()";    
 	public static final String SELECT_LOGIN     = "SELECT * FROM `JSP_MEMBER` WHERE uid=? AND pass=?";
 	
+	public static final String INSERT_BOARD = "INSERT INTO `JSP_BOARD` SET "
+											+ "cate='notice',"
+											+ "title=?,"
+											+ "content=?,"
+											+ "uid=?,"
+											+ "regip=?,"
+											+ "rdate=NOW()";
+	
 	
 }
