@@ -9,6 +9,7 @@
 <%
 	BoardService service = BoardService.getInstance();
 	BoardVO vo = service.view(request);
+	service.updateHit(vo.getSeq());
 %>
 
 <!DOCTYPE html>
@@ -49,7 +50,7 @@
 					</table>
 					<div class="btns">
 						<a href="./proc/delete.jsp?seq=<%= vo.getSeq() %>" class="cancel del">삭제</a>
-						<a href="#" class="cancel mod">수정</a>
+						<a href="./modify.jsp?seq=<%= vo.getSeq() %>&mode=mod" class="cancel mod">수정</a>
 						<a href="./list.jsp" class="cancel">목록</a>
 					</div>
 				</form>

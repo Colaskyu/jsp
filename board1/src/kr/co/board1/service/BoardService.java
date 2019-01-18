@@ -23,12 +23,12 @@ public class BoardService {
 	public void insertBoard() throws Exception {}
 	public void list() throws Exception {}
 	
-	public void updateHit(String seq) throws Exception {
+	public void updateHit(int seq) throws Exception {
 		
 		Connection conn = DBConfig.getConnection();
 		
 		PreparedStatement psmt = conn.prepareStatement(SQL.UPDATE_HIT);
-		psmt.setString(1, seq);
+		psmt.setInt(1, seq);
 		
 		psmt.executeUpdate();
 		psmt.close();
@@ -37,9 +37,6 @@ public class BoardService {
 	public BoardVO view(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String seq = request.getParameter("seq");
-		
-		// Á¶È¸¼ö +1
-		updateHit(seq);
 		
 		Connection conn = DBConfig.getConnection();
 		
@@ -70,7 +67,28 @@ public class BoardService {
 		
 		return vo;
 	}
-	public void update() throws Exception {}
+	
+	public String modify(HttpServletRequest request) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		String title 	= request.getParameter("subject");
+		String content 	= request.getParameter("content");
+		String seq 		= request.getParameter("seq");
+		
+		Connection conn = DBConfig.getConnection();
+		
+		PreparedStatement psmt = conn.prepareStatement(SQL.UPDATE_BOARD);
+		psmt.setString(1, title);
+		psmt.setString(2, content);
+		psmt.setString(3, seq);
+		
+		psmt.executeUpdate();
+		psmt.close();
+		conn.close();
+		
+		return seq;
+	}
+	
 	public void delete(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String seq = request.getParameter("seq");
