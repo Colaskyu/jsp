@@ -17,6 +17,8 @@ public class SQL {
 	
 	public static final String SELECT_LIST = "SELECT b.*, m.nick FROM `JSP_BOARD` AS b JOIN `JSP_MEMBER` AS m ON b.uid = m.uid ORDER BY b.seq DESC";
 	public static final String SELECT_VIEW = "SELECT * FROM `JSP_BOARD` WHERE seq=?";
+	public static final String UPDATE_HIT  = "UPDATE `JSP_BOARD` SET hit=hit+1 WHERE seq=?";
+	
 	
 }
 

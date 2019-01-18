@@ -13,11 +13,15 @@
 	Connection conn = DBConfig.getConnection();
 	
 	// 3단계
-	PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_VIEW);
-	psmt.setString(1, seq);
+	PreparedStatement psmt1 = conn.prepareStatement(SQL.SELECT_VIEW);
+	psmt1.setString(1, seq);
 	
-	// 4단계
-	ResultSet rs = psmt.executeQuery();
+	PreparedStatement psmt2 = conn.prepareStatement(SQL.UPDATE_HIT);
+	psmt2.setString(1, seq);
+	
+	// 4단계	
+	ResultSet rs = psmt1.executeQuery();
+	psmt2.executeUpdate();
 	
 	// 5단계
 	BoardVO vo = new BoardVO();
@@ -38,7 +42,8 @@
 	
 	// 6단계
 	rs.close();
-	psmt.close();
+	psmt1.close();
+	psmt2.close();
 	conn.close();
 %>
 
