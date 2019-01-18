@@ -16,6 +16,8 @@ public class SQL {
 											+ "rdate=NOW()";
 	
 	public static final String SELECT_LIST = "SELECT b.*, m.nick FROM `JSP_BOARD` AS b JOIN `JSP_MEMBER` AS m ON b.uid = m.uid ORDER BY b.seq DESC";
+	public static final String SELECT_VIEW = "SELECT * FROM `JSP_BOARD` WHERE seq=?";
+	
 }
 
 

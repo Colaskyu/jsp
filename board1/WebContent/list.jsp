@@ -76,7 +76,7 @@
 					<% for(BoardVO vo : list){ %>
 					<tr>
 						<td><%= vo.getSeq() %></td>
-						<td><a href="#"><%= vo.getTitle() %></a>&nbsp;[<%= vo.getComment() %>]</td>
+						<td><a href="./view.jsp?seq=<%= vo.getSeq() %>"><%= vo.getTitle() %></a>&nbsp;[<%= vo.getComment() %>]</td>
 						<td><%= vo.getNick() %></td>
 						<td><%= vo.getRdate().substring(2, 10) %></td>
 						<td><%= vo.getHit() %></td>
