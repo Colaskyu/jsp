@@ -69,12 +69,12 @@
 				<% for(BoardVO commentVO : list){ %>
 				<div class="comment">
 					<span>
-						<span><%= commentVO.getUid() %></span>
-						<span><%= commentVO.getRdate() %></span>
+						<span><%= commentVO.getNick() %></span>
+						<span><%= commentVO.getRdate().subSequence(2, 10) %></span>
 					</span>
 					<textarea><%= commentVO.getContent() %></textarea>
 					<div>
-						<a href="#" class="del">삭제</a>
+						<a href="./proc/delete.jsp?seq=<%= commentVO.getSeq() %>&parent=<%= vo.getSeq() %>" class="del">삭제</a>
 						<a href="#" class="mod">수정</a>
 					</div>
 				</div>

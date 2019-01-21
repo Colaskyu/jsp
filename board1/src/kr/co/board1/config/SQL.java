@@ -24,7 +24,10 @@ public class SQL {
 											 + " WHERE seq=?";
 	
 	public static final String INSERT_COMMENT = "CALL insertComment(?,?,?,?)";	
-	public static final String SELECT_COMMENT = "SELECT * FROM `JSP_BOARD` WHERE parent=? ORDER BY seq ASC"; 
+	public static final String SELECT_COMMENT = "SELECT B.*, M.nick "
+											  + "FROM `JSP_BOARD` AS B, `JSP_MEMBER` AS M "
+											  + "WHERE B.uid = M.uid AND parent=? "
+											  + "ORDER BY seq ASC";
 }
 
 

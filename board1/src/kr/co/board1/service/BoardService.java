@@ -98,9 +98,10 @@ public class BoardService {
 		return seq;
 	}
 	
-	public void delete(HttpServletRequest request) throws Exception {
+	public String delete(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("UTF-8");
-		String seq = request.getParameter("seq");
+		String seq 	  = request.getParameter("seq");
+		String parent = request.getParameter("parent");
 		
 		Connection conn = DBConfig.getConnection();
 		
@@ -110,6 +111,7 @@ public class BoardService {
 		psmt.executeUpdate();
 		psmt.close();
 		
+		return parent;
 	}
 	
 	public String insertComment(HttpServletRequest request) throws Exception {
@@ -163,6 +165,7 @@ public class BoardService {
 			vo.setUid(rs.getString(9));
 			vo.setRegip(rs.getString(10));
 			vo.setRdate(rs.getString("rdate"));
+			vo.setNick(rs.getString("nick"));
 			
 			list.add(vo);		
 		}
