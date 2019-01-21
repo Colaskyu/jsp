@@ -74,7 +74,7 @@
 					</span>
 					<textarea><%= commentVO.getContent() %></textarea>
 					<div>
-						<a href="./proc/delete.jsp?seq=<%= commentVO.getSeq() %>&parent=<%= vo.getSeq() %>" class="del">삭제</a>
+						<a href="./proc/commentDelete.jsp?seq=<%= commentVO.getSeq() %>&parent=<%= vo.getSeq() %>" class="del">삭제</a>
 						<a href="#" class="mod">수정</a>
 					</div>
 				</div>
