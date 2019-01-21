@@ -23,8 +23,8 @@ public class SQL {
 											 + "content=?"
 											 + " WHERE seq=?";
 	
-	public static final String INSERT_COMMENT = "INSERT INTO `JSP_BOARD` (parent, content, uid, regip, rdate) VALUES (?,?,?,?,NOW())";
-	
+	public static final String INSERT_COMMENT = "CALL insertComment(?,?,?,?)";	
+	public static final String SELECT_COMMENT = "SELECT * FROM `JSP_BOARD` WHERE parent=? ORDER BY seq ASC"; 
 }
 
 

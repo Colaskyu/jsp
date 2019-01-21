@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class DBConfig {
 
 	//데이터베이스 정보
-	private static final String HOST = "jdbc:mysql://192.168.0.126:3306/chhak";
+	private static final String HOST = "jdbc:mysql://192.168.0.126:3306/chhak?noAccessToProcedureBodies=true";
 	private static final String USER = "chhak";
 	private static final String PASS = "1234";
 	
