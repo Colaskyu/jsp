@@ -23,6 +23,7 @@ public class SQL {
 											 + "content=?"
 											 + " WHERE seq=?";
 	
+	public static final String INSERT_COMMENT = "INSERT INTO `JSP_BOARD` (parent, content, uid, regip, rdate) VALUES (?,?,?,?,NOW())";
 	
 }
 

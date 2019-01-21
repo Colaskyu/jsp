@@ -1,3 +1,4 @@
+<%@page import="kr.co.board1.vo.MemberVO"%>
 <%@page import="kr.co.board1.vo.BoardVO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="kr.co.board1.config.SQL"%>
@@ -9,6 +10,7 @@
 <%
 	BoardService service = BoardService.getInstance();
 	BoardVO vo = service.view(request);
+	MemberVO member = service.getMember(session);
 	service.updateHit(vo.getSeq());
 %>
 
@@ -82,7 +84,9 @@
 			<section class="comment_write">
 				<h3>댓글쓰기</h3>
 				<div>
-					<form action="#" method="post">
+					<form action="./proc/commentWrite.jsp" method="post">
+						<input type="hidden" name="parent" value="<%= vo.getSeq() %>" />
+						<input type="hidden" name="uid" value="<%= member.getUid() %>" />
 						<textarea name="comment" rows="5"></textarea>
 						<div class="btns">
 							<a href="#" class="cancel">취소</a>

@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import kr.co.board1.config.DBConfig;
 import kr.co.board1.config.SQL;
 import kr.co.board1.vo.BoardVO;
+import kr.co.board1.vo.MemberVO;
 
 public class BoardService {
 
@@ -19,6 +21,11 @@ public class BoardService {
 	}
 	
 	private BoardService() {}
+	
+	public MemberVO getMember(HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("member");
+		return vo;		
+	}
 	
 	public void insertBoard() throws Exception {}
 	public void list() throws Exception {}
