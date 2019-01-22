@@ -13,9 +13,6 @@
 	BoardVO vo = service.view(request);
 	MemberVO member = service.getMember(session);
 	service.updateHit(vo.getSeq());
-	
-	// 댓글 가져오기
-	ArrayList<BoardVO> list = service.listComment(vo.getSeq());
 %>
 
 <!DOCTYPE html>
@@ -24,12 +21,61 @@
 		<meta charset="UTF-8" />
 		<title>글보기</title> 
 		<link rel="stylesheet" href="./css/style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+								
+				var comments = $('.comments'); 
+				var comment  = $('.comments > .comment');
+				var empty	 = $('.comments > .empty');
+				var parent   = $('#seq').val();
+				
+				$.ajax({
+					url: './proc/commentList.jsp?parent='+parent,
+					type: 'GET',
+					dataType: 'json',
+					success: function(result){
+						
+						if(result.length == 0){
+							comment.remove();
+						}else{
+							empty.remove();
+						}
+						
+						for(var i in result){
+							
+							var delUrl = "./proc/commentDelete.jsp?seq="+result[i].seq+"&parent="+result[i].parent;
+							
+							if( i > 0 ){
+								var commentCloned = comment.clone();
+								commentCloned.find('span > .nick').text(result[i].nick);
+								commentCloned.find('span > .date').text(result[i].rdate.substring(2, 10));
+								commentCloned.find('textarea').text(result[i].content);
+								commentCloned.find('.del').attr('href', delUrl);
+								
+								comments.append(commentCloned);
+							}else{
+								comment.find('span > .nick').text(result[i].nick);
+								comment.find('span > .date').text(result[i].rdate.substring(2, 10));
+								comment.find('textarea').text(result[i].content);
+								comment.find('.del').attr('href', delUrl);
+							}
+						}
+					}
+				});
+			});
+		
+		</script>
+		
+		
+		
 	</head>
 	<body>
 		<div id="board">
 			<h3>글보기</h3>
 			<div class="view">
 				<form action="#" method="post">
+					<input type="hidden" id="seq" value="<%= vo.getSeq() %>" /> 
 					<table>
 						<tr>
 							<td>제목</td>
@@ -66,23 +112,20 @@
 			<section class="comments">
 				<h3>댓글목록</h3>
 				
-				<% for(BoardVO commentVO : list){ %>
 				<div class="comment">
 					<span>
-						<span><%= commentVO.getNick() %></span>
-						<span><%= commentVO.getRdate().subSequence(2, 10) %></span>
+						<span class="nick">닉네임</span>
+						<span class="date">날짜</span>
 					</span>
-					<textarea><%= commentVO.getContent() %></textarea>
+					<textarea>댓글 내용</textarea>
 					<div>
-						<a href="./proc/commentDelete.jsp?seq=<%= commentVO.getSeq() %>&parent=<%= vo.getSeq() %>" class="del">삭제</a>
+						<a href="./proc/commentDelete.jsp?seq=?&parent=?" class="del">삭제</a>
 						<a href="#" class="mod">수정</a>
 					</div>
 				</div>
-				<% } %>
 			
-				<% if(list.size() == 0){ %>
 				<p class="empty">등록된 댓글이 없습니다.</p>
-				<% } %>
+				
 			</section>
 			
 			<!-- 댓글쓰기 -->
@@ -100,6 +143,7 @@
 					</form>
 				</div>
 			</section>
+			
 		</div><!-- board 끝 -->
 	</body>
 
