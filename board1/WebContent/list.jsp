@@ -1,3 +1,4 @@
+<%@page import="kr.co.board1.service.BoardService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="kr.co.board1.vo.BoardVO"%>
 <%@page import="java.sql.ResultSet"%>
@@ -14,40 +15,37 @@
 		pageContext.forward("./login.jsp");			
 	}
 	
-	Connection conn = DBConfig.getConnection();
+	request.setCharacterEncoding("UTF-8");
+	String pg = request.getParameter("pg");
 	
-	// 3단계
-	PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_LIST);
+	BoardService service = BoardService.getInstance();
 	
-	// 4단계
-	ResultSet rs = psmt.executeQuery();
+	// start 계산
+	int start = 0;
 	
-	// 5단계
-	ArrayList<BoardVO> list = new ArrayList<>();
-	
-	while(rs.next()){
-		BoardVO vo = new BoardVO();
-		vo.setSeq(rs.getInt("seq"));
-		vo.setParent(rs.getInt(2));
-		vo.setComment(rs.getInt(3));
-		vo.setCate(rs.getString(4));
-		vo.setTitle(rs.getString("title"));
-		vo.setContent(rs.getString(6));
-		vo.setFile(rs.getInt(7));
-		vo.setHit(rs.getInt(8));
-		vo.setUid(rs.getString(9));
-		vo.setRegip(rs.getString(10));
-		vo.setRdate(rs.getString("rdate"));
-		vo.setNick(rs.getString("nick"));
+	if(pg == null){
+		start = 1;
+	}else{
+		start = Integer.parseInt(pg);
+	}
 		
-		list.add(vo);		
+	start = (start - 1) * 10;
+	
+	// 페이지번호 계산
+	int total = service.getTotal();
+	int pageEnd = 0;
+	
+	if(total % 10 == 0){
+		pageEnd = total / 10;
+	}else{
+		pageEnd = (total / 10) + 1; 
 	}
 	
-	// 6단계
-	rs.close();
-	psmt.close();
-	conn.close();
+	// 글 카운터번호 계산
+	int count = total - start;
 	
+	
+	ArrayList<BoardVO> list = service.list(start);
 %>
 <!DOCTYPE html>
 <html>
@@ -75,7 +73,7 @@
 				
 					<% for(BoardVO vo : list){ %>
 					<tr>
-						<td><%= vo.getSeq() %></td>
+						<td><%= count-- %></td>
 						<td><a href="./view.jsp?seq=<%= vo.getSeq() %>"><%= vo.getTitle() %></a>&nbsp;[<%= vo.getComment() %>]</td>
 						<td><%= vo.getNick() %></td>
 						<td><%= vo.getRdate().substring(2, 10) %></td>
@@ -89,7 +87,9 @@
 			<nav class="paging">
 				<span> 
 				<a href="#" class="prev">이전</a>
-				<a href="#" class="num">1</a>
+				<% for(int current=1 ; current<=pageEnd ; current++){ %>
+					<a href="./list.jsp?pg=<%= current %>" class="num"><%= current %></a>
+				<% } %>
 				<a href="#" class="next">다음</a>
 				</span>
 			</nav>

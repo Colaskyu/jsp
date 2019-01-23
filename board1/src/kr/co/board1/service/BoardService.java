@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,55 @@ public class BoardService {
 	}
 	
 	public void insertBoard() throws Exception {}
-	public void list() throws Exception {}
+	
+	public int getTotal() throws Exception {
+		
+		int total = 0;
+		Connection conn = DBConfig.getConnection();
+		Statement stmt = conn.createStatement();
+		
+		ResultSet rs = stmt.executeQuery(SQL.SELECT_COUNT);
+		if(rs.next()) {
+			total = rs.getInt(1);
+		}
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return total;
+	}
+	
+	public ArrayList<BoardVO> list(int start) throws Exception {
+		
+		Connection conn = DBConfig.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_LIST);
+		psmt.setInt(1, start);
+		
+		ResultSet rs = psmt.executeQuery();
+		
+		ArrayList<BoardVO> list = new ArrayList<>();
+		while(rs.next()){
+			BoardVO vo = new BoardVO();
+			vo.setSeq(rs.getInt("seq"));
+			vo.setParent(rs.getInt(2));
+			vo.setComment(rs.getInt(3));
+			vo.setCate(rs.getString(4));
+			vo.setTitle(rs.getString("title"));
+			vo.setContent(rs.getString(6));
+			vo.setFile(rs.getInt(7));
+			vo.setHit(rs.getInt(8));
+			vo.setUid(rs.getString(9));
+			vo.setRegip(rs.getString(10));
+			vo.setRdate(rs.getString("rdate"));
+			vo.setNick(rs.getString("nick"));
+			list.add(vo);		
+		}
+		rs.close();
+		psmt.close();
+		conn.close();
+		
+		return list;
+	}
 	
 	public void updateHit(int seq) throws Exception {
 		
