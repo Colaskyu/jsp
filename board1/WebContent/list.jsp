@@ -21,39 +21,17 @@
 	BoardService service = BoardService.getInstance();
 	
 	// Limit용 start 계산
-	int start = 0;
-	
-	if(pg == null){
-		start = 1;
-	}else{
-		start = Integer.parseInt(pg);
-	}
-		
-	int limit = (start - 1) * 10;
+	int limit = service.getLimitStart(pg);
 	
 	// 페이지번호 계산
 	int total = service.getTotal();
-	int pageEnd = 0;
-	
-	if(total % 10 == 0){
-		pageEnd = total / 10;
-	}else{
-		pageEnd = (total / 10) + 1; 
-	}
+	int pageEnd = service.getPageEnd(total);
 	
 	// 글 카운터번호 계산
-	int count = total - start;
+	int count = service.getPageCountStart(total, limit);
 	
 	// 페이지 그룹 계산
-	int currentPage = start;
-	int currentPageGroup = (int)Math.ceil(currentPage/10.0);
-	int groupStart = (currentPageGroup - 1) * 10 + 1;
-	int groupEnd = currentPageGroup * 10;
-	
-	if(groupEnd > pageEnd){
-		groupEnd = pageEnd;
-	}
-	
+	int[] groupStartEnd = service.getPageGroupStartEnd(pg, pageEnd);
 	
 	ArrayList<BoardVO> list = service.list(limit);
 %>
@@ -95,20 +73,18 @@
 			</div>
 			<!-- 페이징 -->
 			<nav class="paging">
-				<span> 
-				
-				<% if(groupStart > 1){ %>
-				<a href="./list.jsp?pg=<%= groupStart - 1 %>" class="prev">이전</a>
+				<span>				
+				<% if(groupStartEnd[0] > 1){ %>
+				<a href="./list.jsp?pg=<%= groupStartEnd[0] - 1 %>" class="prev">이전</a>
 				<% } %>
 				
-				<% for(int current=groupStart ; current<=groupEnd ; current++){ %>
+				<% for(int current=groupStartEnd[0] ; current<=groupStartEnd[1] ; current++){ %>
 					<a href="./list.jsp?pg=<%= current %>" class="num"><%= current %></a>
 				<% } %>
 				
-				<% if(groupEnd < pageEnd){ %>
-				<a href="./list.jsp?pg=<%= groupEnd + 1 %>" class="next">다음</a>
+				<% if(groupStartEnd[1] < pageEnd){ %>
+				<a href="./list.jsp?pg=<%= groupStartEnd[1] + 1 %>" class="next">다음</a>
 				<% } %>
-				
 				</span>
 			</nav>
 			<a href="./write.jsp" class="btnWrite">글쓰기</a>
