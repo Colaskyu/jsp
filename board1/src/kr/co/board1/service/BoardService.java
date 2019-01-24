@@ -22,15 +22,64 @@ public class BoardService {
 	public static BoardService getInstance() {
 		return service;
 	}
-	
 	private BoardService() {}
 	
 	public MemberVO getMember(HttpSession session) {
 		MemberVO vo = (MemberVO) session.getAttribute("member");
 		return vo;		
 	}
+	public int write(int file, String... args) throws Exception {
+		
+		Connection conn = DBConfig.getConnection();
+		// 트랜젝션 시작
+		conn.setAutoCommit(false); 
+		
+		// 3단계
+		PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_BOARD);
+		psmt.setString(1, args[0]);
+		psmt.setString(2, args[1]);
+		psmt.setString(3, args[2]);
+		psmt.setInt(4, file);
+		psmt.setString(5, args[3]);
+		
+		Statement stmt = conn.createStatement();
+		
+		// 4단계
+		psmt.executeUpdate();
+		ResultSet rs = stmt.executeQuery(SQL.SELECT_MAX_SEQ);
+		
+		// 트랜젝션 적용
+		conn.commit();
+		
+		// 5단계
+		int seq = 0;
+		if(rs.next()) {
+			seq = rs.getInt(1);
+		}
+		
+		// 6단계
+		rs.close();
+		stmt.close();
+		psmt.close();
+		conn.close();
+		
+		return seq;
+	}
 	
-	public void insertBoard() throws Exception {}
+	public void fileInsert(int parent, String oldName, String newName) throws Exception {
+		
+		Connection conn = DBConfig.getConnection();
+		
+		PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_FILE);
+		psmt.setInt(1, parent);
+		psmt.setString(2, oldName);
+		psmt.setString(3, newName);
+		
+		psmt.executeUpdate();
+		
+		psmt.close();
+		conn.close();		
+	}
 	
 	public int getTotal() throws Exception {
 		
@@ -48,7 +97,6 @@ public class BoardService {
 		
 		return total;
 	}
-	
 	public int getLimitStart(String pg) {
 		int start = 0;
 		
@@ -60,7 +108,6 @@ public class BoardService {
 			
 		return (start - 1) * 10;
 	}
-	
 	public int getPageEnd(int total) {
 		int pageEnd = 0;
 		
@@ -129,7 +176,6 @@ public class BoardService {
 		
 		return list;
 	}
-	
 	public void updateHit(int seq) throws Exception {
 		
 		Connection conn = DBConfig.getConnection();
@@ -140,7 +186,6 @@ public class BoardService {
 		psmt.executeUpdate();
 		psmt.close();
 	}
-	
 	public BoardVO view(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String seq = request.getParameter("seq");
@@ -174,7 +219,6 @@ public class BoardService {
 		
 		return vo;
 	}
-	
 	public String modify(HttpServletRequest request) throws Exception {
 		
 		request.setCharacterEncoding("UTF-8");
@@ -195,7 +239,6 @@ public class BoardService {
 		
 		return seq;
 	}
-	
 	public String delete(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String seq 	  = request.getParameter("seq");
@@ -211,7 +254,6 @@ public class BoardService {
 		
 		return parent;
 	}
-	
 	public String insertComment(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String parent 	= request.getParameter("parent");
@@ -238,7 +280,6 @@ public class BoardService {
 		
 		return parent;
 	}
-	
 	public ArrayList<BoardVO> listComment(String parent) throws Exception {
 		
 		Connection conn = DBConfig.getConnection();
@@ -275,7 +316,6 @@ public class BoardService {
 		
 		return list;
 	}
-	
 	public void updateCommentCount() throws Exception {}
 }
 

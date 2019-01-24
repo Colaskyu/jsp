@@ -6,13 +6,17 @@ public class SQL {
 	public static final String INSERT_REGISTER  = "INSERT INTO `JSP_MEMBER` SET uid=?, pass=PASSWORD(?), name=?, nick=?, email=?, hp=?, zip=?, addr1=?, addr2=?, regip=?, rdate=NOW()";    
 	public static final String SELECT_LOGIN     = "SELECT * FROM `JSP_MEMBER` WHERE uid=? AND pass=PASSWORD(?)";
 	
+	public static final String SELECT_MAX_SEQ = "SELECT MAX(seq) FROM `JSP_BOARD`";
 	public static final String INSERT_BOARD = "INSERT INTO `JSP_BOARD` SET "
 											+ "cate='notice',"
 											+ "title=?,"
 											+ "content=?,"
 											+ "uid=?,"
+											+ "file=?,"
 											+ "regip=?,"
 											+ "rdate=NOW()";
+	
+	public static final String INSERT_FILE = "INSERT INTO `JSP_FILE` (parent, oldName, newName, rdate) VALUES (?,?,?,NOW())";
 	
 	
 	public static final String SELECT_COUNT = "SELECT COUNT(*) FROM `JSP_BOARD` WHERE parent=0";
