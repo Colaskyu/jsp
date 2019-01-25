@@ -84,7 +84,7 @@
 						<tr>
 							<td>첨부파일</td>
 							<td>
-								<a href="#"><%= vo.getOldName() %></a>
+								<a href="./proc/filedown.jsp?seq=<%= vo.getSeq() %>&newName=<%= vo.getNewName() %>&oldName=<%= vo.getOldName() %>"><%= vo.getOldName() %></a>
 								<span><%= vo.getDownload() %>회 다운로드</span>
 							</td>
 						</tr>
