@@ -29,7 +29,7 @@
 	int file = 0;
 	if(fileName != null){
 		file = 1;
-		// 파일명 생성(UUID)
+		// 1.파일명 생성(UUID)
 		int idx = fileName.lastIndexOf(".");
 		String ext = fileName.substring(idx);
 		
@@ -39,7 +39,7 @@
 		
 		String newFileName = now+uid+ext; // 190124105012_abcd.pptx
 		
-		// 파일명 변경
+		// 2.파일명 변경
 		byte[] buf = new byte[1024];
 		
 		File oldFile = new File(path+"/"+fileName);
@@ -64,10 +64,10 @@
 		//oldFile.renameTo(newFile);
 		oldFile.delete(); // 원본은 제거
 		
-		// 글 등록
+		// 3.글 등록
 		int seq = service.write(file, title, content, uid, regip);
 		
-		// 파일 등록
+		// 4.파일 등록
 		service.fileInsert(seq, fileName, newFileName);
 	}else{
 		service.write(file, title, content, uid, regip);

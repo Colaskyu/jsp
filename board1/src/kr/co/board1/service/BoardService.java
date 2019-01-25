@@ -192,8 +192,8 @@ public class BoardService {
 		
 		Connection conn = DBConfig.getConnection();
 		
-		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_VIEW);
-		psmt.setString(1, seq);
+		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_VIEW_WITH_FILE);
+		psmt.setString(1, seq);		
 		
 		ResultSet rs = psmt.executeQuery();
 		
@@ -211,6 +211,11 @@ public class BoardService {
 			vo.setUid(rs.getString(9));
 			vo.setRegip(rs.getString(10));
 			vo.setRdate(rs.getString(11));
+			
+			vo.setOldName(rs.getString("oldName"));
+			vo.setNewName(rs.getString("newName"));
+			vo.setDownload(rs.getInt("download"));
+			
 		}
 		
 		rs.close();
