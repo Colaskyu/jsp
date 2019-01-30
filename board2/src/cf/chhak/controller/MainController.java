@@ -82,17 +82,40 @@ public class MainController extends HttpServlet {
 		String action = uri.substring(path.length());
 		
 		CommonAction instance = (CommonAction) instances.get(action);
-		String view = null;
+		String result = null;
 		
 		try {
-			view = instance.requestProc(req, resp);
+			result = instance.requestProc(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
-		dispatcher.forward(req, resp);		
+		if(result.startsWith("redirect:")) {
+			String redirectAddr = result.substring(9);
+			resp.sendRedirect(redirectAddr);
+		}else {
+			RequestDispatcher dispatcher = req.getRequestDispatcher(result);
+			dispatcher.forward(req, resp);
+		}
 		
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

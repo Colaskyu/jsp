@@ -37,8 +37,8 @@
 			</section>
 			
 			<div>
-				<a href="#" class="btnCancel">취소</a>
-				<a href="#" class="btnNext">다음</a>
+				<a href="/board2/member/login.do" class="btnCancel">취소</a>
+				<a href="/board2/member/register.do" class="btnNext">다음</a>
 			</div>
 			
 		</div>
