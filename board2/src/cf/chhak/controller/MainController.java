@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainController extends HttpServlet {
 
+	private static final long serialVersionUID = 8373294618728732262L;
 	private Map<String, Object> instances = new HashMap<>();
 
 	@Override
@@ -81,7 +82,13 @@ public class MainController extends HttpServlet {
 		String action = uri.substring(path.length());
 		
 		CommonAction instance = (CommonAction) instances.get(action);
-		String view = instance.requestProc(req, resp);
+		String view = null;
+		
+		try {
+			view = instance.requestProc(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
 		dispatcher.forward(req, resp);		
