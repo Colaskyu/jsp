@@ -2,8 +2,13 @@ package cf.chhak.config;
 
 public class SQL {
 	
-	public static final String SELECT_TERMS     = "SELECT * FROM `JSP_TERMS`";
-	public static final String INSERT_REGISTER  = "INSERT INTO `JSP_MEMBER` SET uid=?, pass=PASSWORD(?), name=?, nick=?, email=?, hp=?, zip=?, addr1=?, addr2=?, regip=?, rdate=NOW()";    
+	public static final String SELECT_TERMS       = "SELECT * FROM `JSP_TERMS`";
+	public static final String INSERT_REGISTER    = "INSERT INTO `JSP_MEMBER` SET uid=?, pass=PASSWORD(?), name=?, nick=?, email=?, hp=?, zip=?, addr1=?, addr2=?, regip=?, rdate=NOW()";    
+	public static final String SELECT_UID_COUNT   = "SELECT COUNT(*) FROM `JSP_MEMBER` WHERE uid=?";
+	public static final String SELECT_NICK_COUNT  = "SELECT COUNT(*) FROM `JSP_MEMBER` WHERE nick=?";
+	public static final String SELECT_EMAIL_COUNT = "SELECT COUNT(*) FROM `JSP_MEMBER` WHERE email=?";
+	public static final String SELECT_HP_COUNT    = "SELECT COUNT(*) FROM `JSP_MEMBER` WHERE hp=?";
+	
 	public static final String SELECT_LOGIN     = "SELECT * FROM `JSP_MEMBER` WHERE uid=? AND pass=PASSWORD(?)";
 	
 	public static final String SELECT_MAX_SEQ = "SELECT MAX(seq) FROM `JSP_BOARD`";

@@ -30,6 +30,5 @@
 				</div>			
 			</section>
 		</div>
-	2
 	</body>
 </html>

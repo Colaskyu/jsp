@@ -5,6 +5,37 @@
 		<meta charset="UTF-8">
 		<title>회원가입</title>
 		<link rel="stylesheet" href="/board2/css/style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			
+			$(document).ready(function(){
+				
+				
+				$('input[name=uid]').keyup(function(){
+					
+					var value = $(this).val();
+					
+					if(value.length >= 4){
+						var api = '/board2/member/userCheck.do?uid='+value;
+						$.getJSON(api, function(data){
+							
+							if(data.result == 1){
+								$('.resultId').css('color', 'red').text('이미 사용중인 아이디 입니다.');
+							}else{
+								$('.resultId').css('color', 'green').text('사용 가능한 아이디 입니다.');
+							}
+														
+						});
+					}
+				});
+				
+				
+				
+			});
+		
+		
+		</script>
+		
 	</head>
 	<body>
 		<div id="member">
