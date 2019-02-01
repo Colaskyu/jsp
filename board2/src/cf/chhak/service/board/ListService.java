@@ -69,7 +69,6 @@ public class ListService implements CommonAction {
 		
 		return "/list.jsp";
 	}// requestProc ³¡
-	
 	public int getTotal() throws Exception {
 		
 		int total = 0;
@@ -86,7 +85,6 @@ public class ListService implements CommonAction {
 		
 		return total;
 	}
-	
 	public int getLimitStart(String pg) {
 		int start = 0;
 		
@@ -98,7 +96,6 @@ public class ListService implements CommonAction {
 			
 		return (start - 1) * 10;
 	}
-	
 	public int getPageEnd(int total) {
 		int pageEnd = 0;
 		
@@ -135,5 +132,13 @@ public class ListService implements CommonAction {
 		
 		return groupStartEnd;
 	}
-	
 }
+
+
+
+
+
+
+
+
+

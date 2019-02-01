@@ -28,7 +28,7 @@
 					<c:forEach var="vo" items="${list}">
 						<tr>
 							<td>${count=count-1}</td>
-							<td><a href="#">${vo.title}</a>&nbsp;[${vo.comment}]</td>
+							<td><a href="/board2/view.do?seq=${vo.seq}">${vo.title}</a>&nbsp;[${vo.comment}]</td>
 							<td>${vo.nick}</td>
 							<td>${vo.rdate.substring(2, 10)}</td>
 							<td>${vo.hit}</td>
@@ -43,7 +43,7 @@
 				<c:if test="${ groupStartEnd[0] > 1 }">
 					<a href="/board2/list.do?pg=${ groupStartEnd[0]-1 }" class="prev">이전</a>
 				</c:if>
-				<c:forEach var="k" begin="${ groupStartEnd[0] }" end="${ pageEnd }">
+				<c:forEach var="k" begin="${ groupStartEnd[0] }" end="${ groupStartEnd[1] }">
 					<a href="/board2/list.do?pg=${k}" class="num">${k}</a>
 				</c:forEach>
 				
