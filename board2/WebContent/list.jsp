@@ -44,7 +44,7 @@
 					<a href="/board2/list.do?pg=${ groupStartEnd[0]-1 }" class="prev">이전</a>
 				</c:if>
 				<c:forEach var="k" begin="${ groupStartEnd[0] }" end="${ pageEnd }">
-					<a href="/board2/list.do?pg=${k}" class="${k==pg ? 'current':''} num">${k}</a>
+					<a href="/board2/list.do?pg=${k}" class="num">${k}</a>
 				</c:forEach>
 				
 				<c:if test="${ groupStartEnd[1] < pageEnd }">
